@@ -8,7 +8,7 @@
 
 
 <h2 style="color: #2e6c80;" data-darkreader-inline-color="">Overview</h2>
-<p>Chariot is chess game platform built on EDMS architecture and Clean Architecture principles with a couple of cool features.</p>
+<p>Chariot is a chess game platform built on EDMS architecture and Clean Architecture principles with a couple of cool features.</p>
 <h2 style="color: #2e6c80;" data-darkreader-inline-color="">Some useful features</h2>
 <ul>
 <li>Match making</li>
