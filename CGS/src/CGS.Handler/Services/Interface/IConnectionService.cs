@@ -2,6 +2,6 @@
 {
     public interface IConnectionService
     {
-        string Connect(string userId, string gameId = "");
+        string Connect(string gameId, string userId, bool isPlayer);
     }
 }

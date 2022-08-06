@@ -1,4 +1,5 @@
 ﻿using CGS.Handler.Hubs.Interface;
+using System.Text;
 
 namespace CGS.Handler.Middlewares
 {
@@ -24,27 +25,28 @@ namespace CGS.Handler.Middlewares
                         var receiveResult = await webSocket.ReceiveAsync(
                             new ArraySegment<byte>(buffer), CancellationToken.None);
 
-
-                        while (!receiveResult.CloseStatus.HasValue)
+                        do
                         {
-                            //await webSocket.SendAsync(
-                            //    new ArraySegment<byte>(buffer, 0, receiveResult.Count),
-                            //    receiveResult.MessageType,
-                            //    receiveResult.EndOfMessage,
-                            //    CancellationToken.None);
+                            var message = Encoding.Default.GetString(buffer, 0, receiveResult.Count);
 
-                            var str = System.Text.Encoding.Default.GetString(buffer, 0, receiveResult.Count);
+                            var cgshr = await _cgsh.HandleAsync(message);
 
-                            await _cgsh.HandleAsync(str);
+ 
+                            await webSocket.SendAsync(
+                                new ArraySegment<byte>(Encoding.ASCII.GetBytes(cgshr), 0, cgshr.Length),
+                                receiveResult.MessageType,
+                                receiveResult.EndOfMessage,
+                                CancellationToken.None);
 
                             receiveResult = await webSocket.ReceiveAsync(
-                                new ArraySegment<byte>(buffer), CancellationToken.None);
-                        }
+                               new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                        } while (!receiveResult.CloseStatus.HasValue);
 
                         await webSocket.CloseAsync(
-                            receiveResult.CloseStatus.Value,
-                            receiveResult.CloseStatusDescription,
-                            CancellationToken.None);
+                        receiveResult.CloseStatus.Value,
+                        receiveResult.CloseStatusDescription,
+                        CancellationToken.None);
                     }
                     else
                     {

@@ -11,9 +11,12 @@ namespace CGS.Handler.Services
             this._logger = _logger;
         }
 
-        public string Connect(string gameId, string userId = "")
+        public string Connect(string gameId, string userId, bool isPlayer)
         {
-            _logger.LogInformation($"User {userId} has been conected");
+            string uref = isPlayer ? "Player" : "Spectatator"; 
+
+            _logger.LogInformation($"{uref} #{userId} has been connected to game #{gameId}");
+      
             return "";
         }
     }
