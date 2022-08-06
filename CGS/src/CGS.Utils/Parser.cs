@@ -12,7 +12,7 @@ namespace CGS.Handler.Utils
         /// <returns></returns>
         public static string[] GetParams(string cmd)
         {
-            return rg.Matches(cmd).Select(match => match.Value).ToArray();
+            return rg.Matches(cmd).Select(match => match.Value.Trim()).ToArray();
         }
     }
 }
