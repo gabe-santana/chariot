@@ -6,9 +6,11 @@ namespace CGS.Handler.Middlewares
     public class CGSHMiddleware
     {
         private readonly RequestDelegate _next;
-        public CGSHMiddleware(RequestDelegate _next)
+        private readonly ILogger<CGSHMiddleware> _logger;
+        public CGSHMiddleware(RequestDelegate _next, ILogger<CGSHMiddleware> _logger)
         {
             this._next = _next;
+            this._logger = _logger;
         }
 
         public async Task Invoke(HttpContext context, ICGSHandlerHub _cgsh, ILogger<CGSHMiddleware> _logger)
@@ -51,6 +53,7 @@ namespace CGS.Handler.Middlewares
                     else
                     {
                         context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                        _logger.LogWarning("A non-websocket connection has been attempted");
                     }
                 }
                 else
@@ -61,6 +64,7 @@ namespace CGS.Handler.Middlewares
             }
             catch (Exception error)
             {
+                _logger.LogError(error.Message);
             }
         }
     }
