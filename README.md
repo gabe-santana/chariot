@@ -1,9 +1,10 @@
-<center>
-<h1 style="color: #5e9ca0;" data-darkreader-inline-color="">Chariot</h1>
 
+
+<p align="center" width="100%">
+<br>
 <img src="https://i.imgur.com/CrsFazd.png"/>
 
-</center>
+</p>
 
 
 <h2 style="color: #2e6c80;" data-darkreader-inline-color="">Overview</h2>
