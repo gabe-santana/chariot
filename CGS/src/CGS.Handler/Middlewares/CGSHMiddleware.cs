@@ -1,5 +1,5 @@
-﻿using CGS.Handler.Hubs.Interface;
-using System.Text;
+﻿using CGS.Handler.Handlers;
+using System.Net.WebSockets;
 
 namespace CGS.Handler.Middlewares
 {
@@ -7,58 +7,55 @@ namespace CGS.Handler.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<CGSHMiddleware> _logger;
-        public CGSHMiddleware(RequestDelegate _next, ILogger<CGSHMiddleware> _logger)
+        private SocketHandler messageHandler { get; set; }
+
+        public CGSHMiddleware(RequestDelegate _next, ILogger<CGSHMiddleware> _logger, SocketHandler messageHandler)
         {
             this._next = _next;
             this._logger = _logger;
+            this.messageHandler = messageHandler;
         }
 
-        public async Task Invoke(HttpContext context, ICGSHandlerHub _cgsh, ILogger<CGSHMiddleware> _logger)
+
+        private async Task Receive(WebSocket socket, Action<WebSocketReceiveResult, byte[]> messageHandler)
+        {
+            var buffer = new byte[1024 * 4];
+
+            while (socket.State == WebSocketState.Open)
+            {
+                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                messageHandler(result, buffer);
+            }
+        }
+
+
+        public async Task Invoke(HttpContext context, ILogger<CGSHMiddleware> _logger)
         {
             try
             {
-
-                if (context.Request.Path == "/ws")
+                if (context.WebSockets.IsWebSocketRequest)
                 {
-                    if (context.WebSockets.IsWebSocketRequest)
-                    {
-                        using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        var buffer = new byte[1024 * 4];
-                        var receiveResult = await webSocket.ReceiveAsync(
-                            new ArraySegment<byte>(buffer), CancellationToken.None);
+                    var socket = await context.WebSockets.AcceptWebSocketAsync();
 
-                        do
+                    await messageHandler.OnConnected(socket);
+
+
+                    await Receive(socket, async (result, buffer) =>
+                    {
+                        if (result.MessageType == WebSocketMessageType.Text)
                         {
-                            var message = Encoding.Default.GetString(buffer, 0, receiveResult.Count);
-
-                            var cgshr = await _cgsh.HandleAsync(message);
-
- 
-                            await webSocket.SendAsync(
-                                new ArraySegment<byte>(Encoding.ASCII.GetBytes(cgshr), 0, cgshr.Length),
-                                receiveResult.MessageType,
-                                receiveResult.EndOfMessage,
-                                CancellationToken.None);
-
-                            receiveResult = await webSocket.ReceiveAsync(
-                               new ArraySegment<byte>(buffer), CancellationToken.None);
-
-                        } while (!receiveResult.CloseStatus.HasValue);
-
-                        await webSocket.CloseAsync(
-                        receiveResult.CloseStatus.Value,
-                        receiveResult.CloseStatusDescription,
-                        CancellationToken.None);
-                    }
-                    else
-                    {
-                        context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                        _logger.LogWarning("A non-websocket connection has been attempted");
-                    }
+                            await messageHandler.Receive(socket, result, buffer);
+                        }
+                        else if (result.MessageType == WebSocketMessageType.Close)
+                        {
+                            await messageHandler.OnDisconnected(socket);
+                        }
+                    });
                 }
                 else
                 {
-                    await _next(context);
+                    context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                    _logger.LogWarning("A non-websocket connection has been attempted");
                 }
 
             }

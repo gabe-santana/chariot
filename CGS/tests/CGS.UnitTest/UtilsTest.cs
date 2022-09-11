@@ -12,7 +12,7 @@ namespace CGS.UnitTest
         [Test]
         public void ConnectionParserTest()
         {
-            var p = Parser.GetParams("conn(x,y)");
+            var p = Parser.GetParams("watch(x,y)");
 
             Assert.That(p, Is.EqualTo(new string[] { "x", "y" }));
         }

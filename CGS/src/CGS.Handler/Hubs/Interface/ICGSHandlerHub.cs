@@ -2,6 +2,6 @@
 {
     public interface ICGSHandlerHub
     {
-        Task<string> HandleAsync(string cmd);
+        Task<string> HandleAsync(string cmd, string socketId);
     }
 }
