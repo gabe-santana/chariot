@@ -19,10 +19,14 @@
 <li>Tournaments</li>
 <li>And more!</li>
 </ul>
-<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
-<h2 style="color: #2e6c80;" data-darkreader-inline-color="">Disclaimer</h2>
-<p><strong>&nbsp;</strong></p>
-<p>Chariot is still in development, free feel to fork and PR.</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>... More docs are coming soon</p>
+
+
+## Services:
+
+- CGS (Chariot Game Service): Handles real-time chess games in the platform
+- Match Making Service: Handles Match making
+- Match Management Service: Handles Match's data and metadatas
+- Board Analyser Service: Handles Board analysing (stockfish) 
+
+
+[![](https://mermaid.ink/img/pako:eNplU8-PmkAU_lcm79QmaCCCCIdNFF22B5tNaXso7OEFpkqEGTuOplb833eGAXQt4QDfj_e-N3lzgZwXFELYCNxvyfdlxjJG1DP_9FrhmQry48tngyzSNcp8S9a4K9mGJFScypy-GTIaSIYbWlMmHwTLSxQnV_O9ShccRUGUtjofVI-P0uf0G8VqJMuaDpKOitNF2-YBfkljVOITVmWBsuTsbRiDjEZPjclWm-CC_jnSg2zIoptLS0gTCYqSEiNtNUoSGUk3Qlsr4flOU_NbA23v4eV_DtL8NLmoSqCLS76jbKjdaRI89fxr_HVgI8Ou743zfrjOOjeHcRtsdZ9h1YqeteceiG9Ae0a9ybCPLW4T8BNtyIsizWu6gAU1FTWWhdqki0YykFu1BhmE6rNAscvAMvhBp2R5S126oIC55GKNYlMyjTu2JtS2XFVlPEqenFkOoRRHasFxr5MsS1QrW0P4G6uDQvfIfnFe9yL1C-EF_kLoe2PbdfxJ4Du-6wSeZ8EZQseZjm3bnU7s2czzPd-ZXS341xawx1N_6gbBLPAcJ3Bdb2IBLUod0FyV9sZc3wGtePhU)](https://mermaid.live/edit#pako:eNplU8-PmkAU_lcm79QmaCCCCIdNFF22B5tNaXso7OEFpkqEGTuOplb833eGAXQt4QDfj_e-N3lzgZwXFELYCNxvyfdlxjJG1DP_9FrhmQry48tngyzSNcp8S9a4K9mGJFScypy-GTIaSIYbWlMmHwTLSxQnV_O9ShccRUGUtjofVI-P0uf0G8VqJMuaDpKOitNF2-YBfkljVOITVmWBsuTsbRiDjEZPjclWm-CC_jnSg2zIoptLS0gTCYqSEiNtNUoSGUk3Qlsr4flOU_NbA23v4eV_DtL8NLmoSqCLS76jbKjdaRI89fxr_HVgI8Ou743zfrjOOjeHcRtsdZ9h1YqeteceiG9Ae0a9ybCPLW4T8BNtyIsizWu6gAU1FTWWhdqki0YykFu1BhmE6rNAscvAMvhBp2R5S126oIC55GKNYlMyjTu2JtS2XFVlPEqenFkOoRRHasFxr5MsS1QrW0P4G6uDQvfIfnFe9yL1C-EF_kLoe2PbdfxJ4Du-6wSeZ8EZQseZjm3bnU7s2czzPd-ZXS341xawx1N_6gbBLPAcJ3Bdb2IBLUod0FyV9sZc3wGtePhU)
