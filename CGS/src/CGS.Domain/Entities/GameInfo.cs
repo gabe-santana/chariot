@@ -6,7 +6,7 @@ namespace CGS.Domain.Entities
     {
         public IEnumerable<UserInfo> Players { get; set; }
         public IEnumerable<UserInfo> Spectators { get; set; }
-        public bool WhiteToPlay { get; set; }
+        public bool WhiteToPlay { get; set; } = true;
         public GameStatus GameStatus { get; set; }
         public string PGN { get; set; }
         public DateTime SnapShot { get; set; }
@@ -16,9 +16,8 @@ namespace CGS.Domain.Entities
 
     public enum GameStatus
     {
-        Ok,
-        WAFK,
-        BAFK,
-        AFK
+        Ok, // Two players are playing
+        HAFK, // Only one player is AFK
+        AFK //Two players are AFK
     }
 }
