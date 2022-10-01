@@ -8,7 +8,7 @@ namespace CGS.Domain.Entities
         public IEnumerable<UserInfo> Spectators { get; set; }
         public bool WhiteToPlay { get; set; } = true;
         public GameStatus GameStatus { get; set; }
-        public string PGN { get; set; }
+        public string Moves { get; set; }
         public DateTime SnapShot { get; set; }
 
 

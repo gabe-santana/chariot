@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CGS.Domain\CGS.Domain.csproj" />
     <ProjectReference Include="..\CGS.Infra\CGS.Infra.csproj" />
+    <ProjectReference Include="..\CGS.SharedKernel\CGS.SharedKernel.csproj" />
     <ProjectReference Include="..\CGS.Utils\CGS.Utils.csproj" />
   </ItemGroup>
 

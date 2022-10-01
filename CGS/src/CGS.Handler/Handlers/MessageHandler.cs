@@ -1,5 +1,6 @@
 ﻿using CGS.Handler.Hubs.Interface;
 using CGS.Handler.SocketsManager;
+using CGS.Utils.Enums;
 using System.Net.WebSockets;
 using System.Text;
 
@@ -29,7 +30,11 @@ namespace CGS.Handler.Handlers
             var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
 
             var _result = await cgsHub.HandleAsync(message, base.ConnectionManagerService.GetSocketId(socket));
-            await SendMessageToAll(_result);
+
+            if (_result.MessageType == MessageTypeEnum.BroadCast)
+                await SendMessageToAll(_result.Message);
+            else
+                await SendMessage(ConnectionManagerService.GetSocketsById(socketId), _result.Message);
         }
     }
 

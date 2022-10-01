@@ -1,4 +1,6 @@
 ﻿using CGS.Handler.Services.Interface;
+using CGS.SharedKernel.ResponseObjects;
+using CGS.Utils.Enums;
 
 namespace CGS.Handler.Services
 {
@@ -11,13 +13,13 @@ namespace CGS.Handler.Services
             this._logger = _logger;
         }
 
-        public string ConnectSpectator(string gameId, string userId)
+        public MessageResponseObject ConnectSpectator(string gameId, string userId)
         {
-            var str = $"User {userId} is connected to the game {gameId} as spectator";
+            var message = $"User {userId} is connected to the game {gameId} as spectator";
 
-            _logger.LogInformation(str);
+            _logger.LogInformation(message);
 
-            return str;
+            return new MessageResponseObject { MessageType = MessageTypeEnum.BroadCast, Message=message };
         }
     }
 }

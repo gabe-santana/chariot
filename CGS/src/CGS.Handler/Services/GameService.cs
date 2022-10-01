@@ -1,6 +1,7 @@
 ﻿using CGS.Domain.Entities;
 using CGS.Handler.Services.Interface;
 using CGS.Infra.Provider.Interfaces;
+using CGS.SharedKernel.ResponseObjects;
 using CGS.Utils.Enums;
 
 namespace CGS.Handler.Services
@@ -9,14 +10,14 @@ namespace CGS.Handler.Services
     {
         private readonly ILogger<GameService> _logger;
         private readonly ICacheProvider<GameInfo> _cacheGameInfo;
-        private readonly ICacheProvider<string> _cacheGamePGN;
+        private readonly ICacheProvider<string> _cacheGameMv;
         public GameService(ILogger<GameService> _logger, ICacheProvider<GameInfo> _cacheGameInfo, ICacheProvider<string> _cacheGamePGN)
         {
             this._logger = _logger;
             this._cacheGameInfo = _cacheGameInfo;
-            this._cacheGamePGN = _cacheGamePGN;
+            this._cacheGameMv = _cacheGamePGN;
         }
-        public async Task<string> ConnectPlayer(string gameId, string userId, string socketId)
+        public async Task<MessageResponseObject> ConnectPlayer(string gameId, string userId, string socketId)
         {
             var gi = await _cacheGameInfo.GetAsync(RedisDBEnum.GameInfo, gameId);
 
@@ -44,7 +45,7 @@ namespace CGS.Handler.Services
                 {
                     var errormsg = "[Connection Error] Player is already connected";
                     _logger.LogWarning(errormsg);
-                    return errormsg;
+                    return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errormsg };
                 }
             }
 
@@ -52,14 +53,14 @@ namespace CGS.Handler.Services
             {
                 var errormsg = "[Connection Error] Player not found.";
                 _logger.LogWarning(errormsg);
-                return errormsg;
+                return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errormsg }; ;
             }
 
             await _cacheGameInfo.SetAsync(RedisDBEnum.GameInfo, gameId, gi);
-            var str = $"User {userId} is connected to the game {gameId} as player";
+            var sucessMessage = $"User {userId} is connected to the game {gameId} as player";
 
-            _logger.LogInformation(str);
-            return str;
+            _logger.LogInformation(sucessMessage);
+            return new MessageResponseObject { MessageType = MessageTypeEnum.BroadCast, Message = sucessMessage }; ;
         }
 
         public async Task<bool> CreateGame(string gameId, string wPlayerId, string bPlayerId, string initialPGN = null)
@@ -74,7 +75,7 @@ namespace CGS.Handler.Services
                     new UserInfo { Id = bPlayerId, IsPlayer = true, IsWhite = false, IsConnected = false }
                 },
                     GameStatus = GameStatus.AFK,
-                    PGN = initialPGN,
+                    Moves = initialPGN,
 
                 });
                 return true;
@@ -85,7 +86,7 @@ namespace CGS.Handler.Services
             }
         }
 
-        public async Task<string> Move(string gameId, string userId, string moveStmt)
+        public async Task<MessageResponseObject> Move(string gameId, string userId, string moveStmt)
         {
             // Validate movement
 
@@ -93,8 +94,13 @@ namespace CGS.Handler.Services
 
             var gi = await _cacheGameInfo.GetAsync(RedisDBEnum.GameInfo, gameId);
 
-            if (gi == null)
-                return "Game not found";
+            if (gi == null) 
+            {
+                var errorMessage = "Game not found";
+                _logger.LogInformation(errorMessage);
+                return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errorMessage };
+            }
+                
 
             var player = gi.Players.Where(player => player.Id == userId).FirstOrDefault();
 
@@ -102,21 +108,26 @@ namespace CGS.Handler.Services
             {
                 if (gi.WhiteToPlay && player.IsWhite || !gi.WhiteToPlay && !player.IsWhite)
                 {
-                    var pgn = await _cacheGamePGN.GetAsync(RedisDBEnum.PGN, gameId);
+                    var mvList = await _cacheGameMv.GetAsync(RedisDBEnum.MvDB, gameId);
+ 
+                    await _cacheGameMv.SetAsync(RedisDBEnum.MvDB, gameId, String.IsNullOrEmpty(mvList) ? moveStmt : $"{mvList},{moveStmt}");
 
-                    await _cacheGamePGN.SetAsync(RedisDBEnum.PGN, gameId, moveStmt);
+                    gi.WhiteToPlay = !gi.WhiteToPlay;
+                    await _cacheGameInfo.SetAsync(RedisDBEnum.GameInfo, gameId, gi);
                 }
                 else 
                 {
-                    return "Forbidden movement";
+                    var errorMessage = "Forbidden movement. Reason: It's not your time!";
+                    return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errorMessage };
                 }
             }
             else 
             {
-                return "Player not found";
+                var errorMessage = "Player not found";
+                return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errorMessage };
             }
 
-            return moveStmt;
+            return new MessageResponseObject { MessageType = MessageTypeEnum.BroadCast, Message = moveStmt };
         }
     }
 }

@@ -24,8 +24,9 @@ namespace CGS.Infra.Provider
             var _redisDB = _redisDBConnection.GetDatabase((int) db);
             var result = await _redisDB.StringGetAsync(key);
 
-
-            return JsonConvert.DeserializeObject<TEntity>(result);
+            if(result.HasValue)
+                return JsonConvert.DeserializeObject<TEntity>(result);
+            return default(TEntity);
         }
 
         public async Task SetAsync(RedisDBEnum db, string key, TEntity entity)

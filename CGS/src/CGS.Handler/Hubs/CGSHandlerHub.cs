@@ -1,6 +1,8 @@
 using CGS.Handler.Hubs.Interface;
 using CGS.Handler.Services.Interface;
 using CGS.Handler.Utils;
+using CGS.SharedKernel.ResponseObjects;
+using CGS.Utils.Enums;
 
 namespace CGS.Handler.Hubs
 {
@@ -18,7 +20,7 @@ namespace CGS.Handler.Hubs
             this._gameService = gameService;
         }
 
-        public async Task<string> HandleAsync(string cmd, string socketId)
+        public async Task<MessageResponseObject> HandleAsync(string cmd, string socketId)
         {
             _logger.LogInformation($"Command Received {cmd}");
             switch (cmd)
@@ -40,7 +42,9 @@ namespace CGS.Handler.Hubs
                     break;
             }
 
-            return "";
+            var warningMessage = $"Command not found: {cmd}";
+            _logger.LogWarning(warningMessage);
+            return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = warningMessage };
 
         }
     }

@@ -1,7 +1,9 @@
-﻿namespace CGS.Handler.Services.Interface
+﻿using CGS.SharedKernel.ResponseObjects;
+
+namespace CGS.Handler.Services.Interface
 {
     public interface IWatchService
     {
-        string ConnectSpectator(string gameId, string userId);
+        MessageResponseObject ConnectSpectator(string gameId, string userId);
     }
 }

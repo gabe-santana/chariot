@@ -2,7 +2,7 @@
 {
     public enum RedisDBEnum
     {
-        PGN,
+        MvDB,
         GameInfo
     }
 }

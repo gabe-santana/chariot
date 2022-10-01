@@ -1,7 +1,9 @@
-﻿namespace CGS.Handler.Hubs.Interface
+﻿using CGS.SharedKernel.ResponseObjects;
+
+namespace CGS.Handler.Hubs.Interface
 {
     public interface ICGSHandlerHub
     {
-        Task<string> HandleAsync(string cmd, string socketId);
+        Task<MessageResponseObject> HandleAsync(string cmd, string socketId);
     }
 }
