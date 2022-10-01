@@ -29,12 +29,12 @@ namespace CGS.Handler.Hubs
 
                 case var value when value.Contains(TokenStatement.PlayGame):
                     var paramsPlayer = Parser.GetParams(cmd);
-                    return _gameService.ConnectPlayer(paramsPlayer[0], paramsPlayer[1], socketId);
+                    return await _gameService.ConnectPlayer(paramsPlayer[0], paramsPlayer[1], socketId);
 
 
                 case var value when value.Contains(TokenStatement.Move):
                     var paramsGame = Parser.GetParams(cmd);
-                    return _gameService.Move(moveStmt: paramsGame[0], pFlag: paramsGame[1]);
+                    return await _gameService.Move(gameId: paramsGame[0], userId: paramsGame[1], moveStmt: paramsGame[2]);
 
                 default:
                     break;
