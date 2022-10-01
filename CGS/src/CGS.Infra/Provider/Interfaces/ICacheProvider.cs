@@ -1,11 +1,13 @@
-﻿namespace CGS.Infra.Provider.Interfaces
+﻿using CGS.Utils.Enums;
+
+namespace CGS.Infra.Provider.Interfaces
 {
     public interface ICacheProvider<TEntity>
     {
-        Task DeleteAsync(int db, string key);
+        Task DeleteAsync(RedisDBEnum db, string key);
 
-        Task<TEntity> GetAsync(int db, string key);
+        Task<TEntity> GetAsync(RedisDBEnum db, string key);
 
-        Task SetAsync(int db, string key, TEntity entity);
+        Task SetAsync(RedisDBEnum db, string key, TEntity entity);
     }
 }

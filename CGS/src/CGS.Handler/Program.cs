@@ -18,6 +18,7 @@ app.AddCors();
 app.AddWebSocket();
 
 app.MapSockets("/ws");
+app.MapHttpMatchDataTrigger("/matchdata");
 
 app.Run();
 #endregion
