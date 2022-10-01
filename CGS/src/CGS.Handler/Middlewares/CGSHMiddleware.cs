@@ -63,6 +63,8 @@ namespace CGS.Handler.Middlewares
             {
                 _logger.LogError(error.Message);
             }
+
+            await _next(context);
         }
     }
 }
