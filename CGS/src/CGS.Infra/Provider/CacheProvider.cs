@@ -15,23 +15,23 @@ namespace CGS.Infra.Provider
 
         public async Task DeleteAsync(RedisDBEnum db, string key)
         {
-            var _redisDB = _redisDBConnection.GetDatabase((int) db);
+            var _redisDB = _redisDBConnection.GetDatabase((int)db);
             await _redisDB.KeyDeleteAsync(key);
         }
 
         public async Task<TEntity> GetAsync(RedisDBEnum db, string key)
         {
-            var _redisDB = _redisDBConnection.GetDatabase((int) db);
+            var _redisDB = _redisDBConnection.GetDatabase((int)db);
             var result = await _redisDB.StringGetAsync(key);
 
-            if(result.HasValue)
+            if (result.HasValue)
                 return JsonConvert.DeserializeObject<TEntity>(result);
-            return default(TEntity);
+            return default;
         }
 
         public async Task SetAsync(RedisDBEnum db, string key, TEntity entity)
         {
-            var _redisDB = _redisDBConnection.GetDatabase((int) db);
+            var _redisDB = _redisDBConnection.GetDatabase((int)db);
             await _redisDB.StringSetAsync(key, JsonConvert.SerializeObject(entity));
         }
 

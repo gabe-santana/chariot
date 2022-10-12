@@ -19,7 +19,7 @@ namespace CGS.Handler.Services
 
             _logger.LogInformation(message);
 
-            return new MessageResponseObject { MessageType = MessageTypeEnum.BroadCast, Message=message };
+            return new MessageResponseObject { MessageType = MessageTypeEnum.BroadCast, Message = message };
         }
     }
 }

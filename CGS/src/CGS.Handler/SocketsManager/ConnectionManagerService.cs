@@ -6,7 +6,7 @@ namespace CGS.Handler.SocketsManager
     public class ConnectionManagerService
     {
 
-        private ConcurrentDictionary<string, WebSocket> Connections = new ConcurrentDictionary<string, WebSocket>();
+        private readonly ConcurrentDictionary<string, WebSocket> Connections = new ConcurrentDictionary<string, WebSocket>();
 
         public WebSocket GetSocketsById(string id)
         {

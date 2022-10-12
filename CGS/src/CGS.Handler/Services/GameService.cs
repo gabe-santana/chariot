@@ -80,7 +80,7 @@ namespace CGS.Handler.Services
                 });
                 return true;
             }
-            catch 
+            catch
             {
                 return false;
             }
@@ -94,34 +94,34 @@ namespace CGS.Handler.Services
 
             var gi = await _cacheGameInfo.GetAsync(RedisDBEnum.GameInfo, gameId);
 
-            if (gi == null) 
+            if (gi == null)
             {
                 var errorMessage = "Game not found";
                 _logger.LogInformation(errorMessage);
                 return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errorMessage };
             }
-                
+
 
             var player = gi.Players.Where(player => player.Id == userId).FirstOrDefault();
 
             if (player != null)
             {
-                if (gi.WhiteToPlay && player.IsWhite || !gi.WhiteToPlay && !player.IsWhite)
+                if (gi.WhiteToPlay == player.IsWhite || !gi.WhiteToPlay && !player.IsWhite)
                 {
                     var mvList = await _cacheGameMv.GetAsync(RedisDBEnum.MvDB, gameId);
- 
+
                     await _cacheGameMv.SetAsync(RedisDBEnum.MvDB, gameId, String.IsNullOrEmpty(mvList) ? moveStmt : $"{mvList},{moveStmt}");
 
                     gi.WhiteToPlay = !gi.WhiteToPlay;
                     await _cacheGameInfo.SetAsync(RedisDBEnum.GameInfo, gameId, gi);
                 }
-                else 
+                else
                 {
                     var errorMessage = "Forbidden movement. Reason: It's not your time!";
                     return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errorMessage };
                 }
             }
-            else 
+            else
             {
                 var errorMessage = "Player not found";
                 return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errorMessage };
