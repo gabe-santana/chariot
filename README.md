@@ -5,6 +5,15 @@
 <img src="https://i.imgur.com/CrsFazd.png"/>
 
 </p>
+<img alt="DotNetCore" src="https://img.shields.io/github/contributors/gabe-santana/chariot" />
+
+</br></br>
+<img alt="DotNetCore" src="https://img.shields.io/badge/-.NET-7022DC?style=flat-square&logo=dot-net&logoColor=white" />
+<img alt="DotNetCore" src="https://img.shields.io/badge/-Rust-ffcc99?style=flat-square&logo=rust&logoColor=white" />
+<img alt="DotNetCore" src="https://img.shields.io/badge/-Python-e0c050?style=flat-square&logo=python&logoColor=white" />
+<img alt="DotNetCore" src="https://img.shields.io/badge/-Docker-blue?style=flat-square&logo=docker&logoColor=white" />
+<img alt="DotNetCore" src="https://img.shields.io/badge/-Dapr-003366?style=flat-square&logo=dapr&logoColor=white" />
+<img alt="DotNetCore" src="https://img.shields.io/badge/-Kubernetes-66ccff?style=flat-square&logo=kubernetes&logoColor=white" />
 
 
 <h2 style="color: #2e6c80;" data-darkreader-inline-color="">♚ Overview ♔</h2>
