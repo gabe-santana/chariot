@@ -1,14 +1,28 @@
 version: '3.8'
 services:
   cgs_cache:
+    container_name: 'cgs_cache'
     image: redis
     restart: always
     ports:
     - '6379:6379'
     command: redis-server --save 20 1 --loglevel warning
-    volumes: 
-    - cgs_cache:/data
-    
-volumes:
-  cgs_cache:
-    driver: local
+    volumes:
+        - ../volumes/redis_data/redis.conf:/tmp/redis.conf
+  
+  mmgts_db:
+    container_name: 'mmgts_db'
+    image: postgres:latest
+    ports:
+        - "5432:5432"
+
+    restart: always
+    volumes:
+        - ../volumes/postgres_data:/var/lib/postgresql/data
+        - ../volumes/postgres_data_backups:/backups
+
+    command: postgres -c 'max_connections=500'
+    environment:
+        - POSTGRES_USER=mmgts_db_user
+        - POSTGRES_PASSWORD=mmgts_db_pwd
+        - POSTGRES_DB=mmgts_db
