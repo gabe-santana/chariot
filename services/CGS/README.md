@@ -3,7 +3,7 @@
 > This stateful service is responsible for the real-time communication during the games through a socket connection
 
 
-## How does it works?
+## How does it work?
 There's a few avaible commands that CGS accepts through a socket connection, they are:
 
 - Watch Ccommand
