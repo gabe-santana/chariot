@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace MMGTS.Server.Repositories
+namespace MMGTS.Domain.Contracts.Repositories
 {
     public interface IGenericRepo<TEntity>
     {
