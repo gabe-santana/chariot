@@ -1,7 +1,10 @@
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
 using MediatR;
 using MMGTS.Server.Config;
 using MMGTS.Server.Services;
 using System.Reflection;
+using MMGTS.SharedKernel.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -16,6 +19,10 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 // Build database connection configuration
 builder.Services.ConfigureDatabase(config.GetConnectionString("Postgres"));
+
+// Configure Autofac
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new MMGTSIoCModule()));
 
 // Build app
 var app = builder.Build();
