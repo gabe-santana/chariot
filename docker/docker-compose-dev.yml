@@ -5,7 +5,7 @@ services:
     image: redis
     restart: always
     ports:
-    - '6379:6379'
+    - '6378:6379'
     command: redis-server --save 20 1 --loglevel warning
     volumes:
         - ../volumes/redis_data/redis.conf:/tmp/redis.conf

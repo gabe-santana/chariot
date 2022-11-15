@@ -17,15 +17,17 @@ namespace MMGTS.Application.EventHandler
         }
         public Task Handle(CreatedMatchNotification notification, CancellationToken cancellationToken)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 _logger.LogInformation($"[Match Creation] MatchId: {notification.MatchId}, White: {notification.WhitePlayerId}, Black: {notification.BlackPlayerId}");
             });
-            
+
         }
 
         public Task Handle(ErrorNotification notification, CancellationToken cancellationToken)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 _logger.LogInformation($"[Match Error] Message: {notification.Message}, StackTrace: {notification.StackTrace}");
             });
         }

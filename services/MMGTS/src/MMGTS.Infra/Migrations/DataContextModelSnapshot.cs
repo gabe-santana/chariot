@@ -43,12 +43,10 @@ namespace MMGTS.Infra.Migrations
                         .HasColumnName("date");
 
                     b.Property<string>("PGN")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("pgn");
 
                     b.Property<string>("Result")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("result");
 
@@ -57,7 +55,7 @@ namespace MMGTS.Infra.Migrations
                         .HasColumnType("text")
                         .HasColumnName("timecontrol");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updatedat");
 

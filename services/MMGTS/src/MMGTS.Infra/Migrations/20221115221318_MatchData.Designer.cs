@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MMGTS.Infra.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221023204015_MatchData")]
+    [Migration("20221115221318_MatchData")]
     partial class MatchData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,12 +45,10 @@ namespace MMGTS.Infra.Migrations
                         .HasColumnName("date");
 
                     b.Property<string>("PGN")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("pgn");
 
                     b.Property<string>("Result")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("result");
 
@@ -59,7 +57,7 @@ namespace MMGTS.Infra.Migrations
                         .HasColumnType("text")
                         .HasColumnName("timecontrol");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updatedat");
 

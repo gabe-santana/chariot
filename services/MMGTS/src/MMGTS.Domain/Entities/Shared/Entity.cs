@@ -2,7 +2,9 @@
 {
     public class Entity
     {
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime? UpdatedAt { get; set; } = null!;
     }
 }
