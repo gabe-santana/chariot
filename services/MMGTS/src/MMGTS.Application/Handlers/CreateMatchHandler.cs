@@ -36,7 +36,7 @@ namespace MMGTS.Server.Handlers
 
                 return $"Match created {matchId}";
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 await _mediator.Publish(new ErrorNotification { Message = ex.Message, StackTrace = ex.StackTrace });
                 return await Task.FromResult($"Occured an error while creating a match: {ex.InnerException}");

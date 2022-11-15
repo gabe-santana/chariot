@@ -28,7 +28,7 @@ namespace MMGTS.Server.Services
 
             switch (request.Method)
             {
-      
+
                 case "CreateMatch":
                     {
                         var queryRequest = request.Data.ConvertFromAnyTypeAsync<CreateMatchCommand>();

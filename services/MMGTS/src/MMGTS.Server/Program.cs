@@ -1,10 +1,10 @@
-using Autofac.Extensions.DependencyInjection;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using MediatR;
 using MMGTS.Server.Config;
 using MMGTS.Server.Services;
-using System.Reflection;
 using MMGTS.SharedKernel.IoC;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;

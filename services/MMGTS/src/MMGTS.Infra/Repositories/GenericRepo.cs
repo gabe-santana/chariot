@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using MMGTS.Domain.Contracts.Repositories;
 using MMGTS.Infra.EF.Context;
 using System.Linq.Expressions;
-using MMGTS.Domain.Contracts.Repositories;
 
 namespace MMGTS.Server.Repositories
 {
