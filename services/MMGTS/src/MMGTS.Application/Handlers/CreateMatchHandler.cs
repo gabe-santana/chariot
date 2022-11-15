@@ -19,11 +19,12 @@ namespace MMGTS.Server.Handlers
 
         public async Task<string> Handle(CreateMatchCommand request, CancellationToken cancellationToken)
         {
+            var matchId = Guid.NewGuid();
             try
             {
                 var match = new MatchData
                 {
-                    Id = Guid.NewGuid(),
+                    Id = matchId,
                     WPlayerId = request.WhitePlayerId,
                     BPlayerId = request.BlackPlayerId,
                     TimeControl = request.TimeControl,
@@ -33,12 +34,12 @@ namespace MMGTS.Server.Handlers
                 await _genericRepo.Add(match);
                 await _mediator.Publish(new CreatedMatchNotification { MatchId = match.Id.ToString(), WhitePlayerId = match.WPlayerId, BlackPlayerId = match.BPlayerId });
 
-                return Guid.NewGuid().ToString();
+                return $"Match created {matchId}";
             }
             catch (Exception ex) 
             {
                 await _mediator.Publish(new ErrorNotification { Message = ex.Message, StackTrace = ex.StackTrace });
-                return await Task.FromResult("Occured an error while creating a match");
+                return await Task.FromResult($"Occured an error while creating a match: {ex.InnerException}");
             }
         }
     }
