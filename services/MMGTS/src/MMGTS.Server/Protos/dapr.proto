@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package MMGTS.Server.Protos;
+
+option csharp_namespace = "MMGTS.Server.Protos";
+
+service MatchService {
+	rpc CreateMatch(CreateMatchMessage) returns(Match);
+}
+
+message CreateMatchMessage{
+	string WhitePlayerId = 1;
+	string BlackPlayerId = 2;
+	string TimeControl = 3;
+}
+
+message Match {
+	string Id = 1;
+	string WhitePlayerId = 2;
+	string BlackPlayerId = 3;
+	string TimeControl = 4;
+}

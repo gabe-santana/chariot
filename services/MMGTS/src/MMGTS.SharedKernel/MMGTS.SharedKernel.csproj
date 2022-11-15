@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Adapters\MMGTSMapperProfile.cs~RFd05e87.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.4.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.21.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MMGTS.Application\MMGTS.Application.csproj" />
+  </ItemGroup>
+
+</Project>
