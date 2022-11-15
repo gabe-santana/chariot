@@ -82,7 +82,7 @@ namespace MMGTS.UnitTests
                 var handler = new CreateMatchHandler(mediatorMock.Object, _repo);
 
                 var response = await handler.Handle(cmd, new CancellationToken());
-                Assert.Contains("Match created", response);
+                Assert.DoesNotContain("error", response);
             }
         }
     }
