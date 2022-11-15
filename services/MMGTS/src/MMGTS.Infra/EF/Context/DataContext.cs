@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MMGTS.Domain.Entities;
+using System.Data.Entity.Infrastructure;
 
 namespace MMGTS.Infra.EF.Context
 {
@@ -7,9 +8,15 @@ namespace MMGTS.Infra.EF.Context
     {
         public DataContext()
         {
+
+            ((IObjectContextAdapter)this).ObjectContext.ObjectMaterialized +=
+              (sender, e) => DateTimeKindAttribute.Apply(e.Entity);
         }
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) 
+        {
+           
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -31,14 +38,14 @@ namespace MMGTS.Infra.EF.Context
 
             AddedEntities.ForEach(E =>
             {
-                E.Property("CreatedAt").CurrentValue = DateTime.Now;
+                E.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
             });
 
             var EditedEntities = ChangeTracker.Entries().Where(E => E.State == EntityState.Modified).ToList();
 
             EditedEntities.ForEach(E =>
             {
-                E.Property("UpdatedAt").CurrentValue = DateTime.Now;
+                E.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
             });
         }
     }

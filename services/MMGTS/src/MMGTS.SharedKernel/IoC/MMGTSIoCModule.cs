@@ -1,6 +1,9 @@
 ﻿using Autofac;
 using AutoMapper;
+using MediatR;
 using MMGTS.Domain.Contracts.Repositories;
+using MMGTS.Server.Commands;
+using MMGTS.Server.Handlers;
 using MMGTS.Server.Repositories;
 using MMGTS.SharedKernel.Adapters;
 
@@ -28,6 +31,14 @@ namespace MMGTS.SharedKernel.IoC
             #endregion
 
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IGenericRepo<>));
+
+
+
+            #region MediatR
+            builder
+                .RegisterType(typeof(CreateMatchHandler))
+                .AsImplementedInterfaces();
+            #endregion
         }
     }
 }

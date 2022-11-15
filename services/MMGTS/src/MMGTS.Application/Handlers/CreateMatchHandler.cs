@@ -6,7 +6,7 @@ using MMGTS.Server.Commands;
 
 namespace MMGTS.Server.Handlers
 {
-    public class CreateMatchHandler
+    public class CreateMatchHandler : IRequestHandler<CreateMatchCommand, string>
     {
         private readonly IMediator _mediator;
         private readonly IGenericRepo<MatchData> _genericRepo;
@@ -34,7 +34,7 @@ namespace MMGTS.Server.Handlers
                 await _genericRepo.Add(match);
                 await _mediator.Publish(new CreatedMatchNotification { MatchId = match.Id.ToString(), WhitePlayerId = match.WPlayerId, BlackPlayerId = match.BPlayerId });
 
-                return $"Match created {matchId}";
+                return $"{matchId}";
             }
             catch (Exception ex)
             {

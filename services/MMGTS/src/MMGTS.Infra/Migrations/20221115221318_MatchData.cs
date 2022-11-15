@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -16,11 +17,11 @@ namespace MMGTS.Infra.Migrations
                     wplayerid = table.Column<string>(type: "text", nullable: false),
                     bplayerid = table.Column<string>(type: "text", nullable: false),
                     timecontrol = table.Column<string>(type: "text", nullable: false),
-                    result = table.Column<string>(type: "text", nullable: false),
-                    pgn = table.Column<string>(type: "text", nullable: false),
+                    result = table.Column<string>(type: "text", nullable: true),
+                    pgn = table.Column<string>(type: "text", nullable: true),
                     date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     createdat = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    updatedat = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    updatedat = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

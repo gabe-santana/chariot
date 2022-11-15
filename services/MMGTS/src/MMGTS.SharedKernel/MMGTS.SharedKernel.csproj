@@ -17,8 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MMGTS.Domain\MMGTS.Domain.csproj" />
-    <ProjectReference Include="..\MMGTS.Infra\MMGTS.Infra.csproj" />
+    <ProjectReference Include="..\MMGTS.Application\MMGTS.Application.csproj" />
   </ItemGroup>
 
 </Project>
