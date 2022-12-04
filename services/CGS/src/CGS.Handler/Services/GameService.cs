@@ -21,6 +21,13 @@ namespace CGS.Handler.Services
         {
             var gi = await _cacheGameInfo.GetAsync(RedisDBEnum.GameInfo, gameId);
 
+            if (gi == null) 
+            {
+                var errormsg = "[Connection Error] Match was not found";
+                _logger.LogWarning(errormsg);
+                return new MessageResponseObject { MessageType = MessageTypeEnum.Error, Message = errormsg };
+            }
+
             var user = gi.Players.Where(player => player.Id == userId).FirstOrDefault();
 
             var adv = gi.Players.Where(player => player.Id != userId).ToList();
